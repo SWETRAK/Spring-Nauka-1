@@ -25,13 +25,17 @@ public class UserController {
 
     @PostMapping
     public Object createUser(@RequestBody User newUser) {
-        try {
-            userService.createUser(newUser);
-            return Map.of("message", "User successfully created");
-        } catch (Error error) {
-            return error;
-        }
+        userService.createUser(newUser);
+        return Map.of("message", "User successfully created");
+    }
 
+    @PutMapping(path = "{userId}")
+    public Object updateUser(
+            @PathVariable(name = "userId") Long userId,
+            @RequestBody String email,
+            @RequestBody String name) {
+        userService.putUser(userId, name, email);
+        return Map.of("message", "user updated");
     }
 
 }
